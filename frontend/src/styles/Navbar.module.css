@@ -1,0 +1,48 @@
+/* Navbar.module.css */
+
+.navbar {
+  background: linear-gradient(to right, #4CAF50, #66BB6A);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 1.5rem; /* Adjust font size to make it simpler */
+  font-weight: bold;
+  color: white; /* Ensure logo text is white */
+  margin: 0; /* Remove any margin that might push it out of view */
+  font-family: 'Roboto', sans-serif; /* Use a clean, modern font */
+}
+
+.navLinks {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinks li {
+  margin: 0 15px;
+}
+
+.navLinks li a {
+  color: white; /* Ensure link text is white */
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 5px 10px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.navLinks li a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  color: #F1F8E9;
+}

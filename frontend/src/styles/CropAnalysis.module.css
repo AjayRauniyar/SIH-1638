@@ -1,0 +1,62 @@
+/* CropAnalysis.module.css */
+
+.container {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.heading {
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+}
+
+.instructions {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.uploadSection {
+  margin-bottom: 30px;
+}
+
+.fileInput {
+  display: block;
+  margin: 0 auto 20px auto;
+  padding: 10px;
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+}
+
+.imagePreview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.analyzeButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.analyzeButton:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.resultSection {
+  margin-top: 30px;
+  text-align: left;
+  background-color: #F1F8E9;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.resultSection h3 {
+  color: #FF5722;
+}
