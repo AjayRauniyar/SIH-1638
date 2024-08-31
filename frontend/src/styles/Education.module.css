@@ -1,47 +1,26 @@
+/* Education.module.css */
 .container {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  text-align: center; /* Centers all content */
+  padding: 2rem;
 }
 
 .heading {
   font-size: 24px;
   font-weight: bold;
-  margin: 2rem auto 3rem; /* Adjusts the spacing around the heading */
-  text-align: center; /* Centers the heading */
+  margin-bottom: 2rem;
 }
 
 .infoSection {
-  padding: 2rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 3rem; /* Adds space before the footer */
+  margin-bottom: 2rem;
 }
 
 .textWithImage {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: center; /* Centers the content */
+  gap: 1rem;
 }
 
 .textSection {
   flex: 1;
-  margin-right: 2rem;
-}
-
-.imageSection {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
 }
 
 .subheading {
@@ -52,132 +31,120 @@
 
 .paragraph {
   font-size: 16px;
-  line-height: 1.8; 
-  margin-bottom: 2rem; 
-  text-align: justify; 
-  padding: 0 1.5rem; 
-  color: #333; 
+  line-height: 1.6;
 }
 
+.imageSection {
+  flex: 1;
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
 
 .resourceGrid {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .resourceCard {
-  flex: 1;
-  background: white;
+  background-color: #f9f9f9;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  transition: transform 0.3s ease;
+}
+
+.faqSection {
+  margin-top: 3rem;
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.faqHeading {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
   text-align: center;
+  color: #333;
 }
 
-.resourceCard:hover {
-  transform: translateY(-10px);
+.faqItem {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  padding-left: 2rem; /* Adjust as needed for spacing */
 }
 
-.resourceCard a {
+.faqItem:last-child {
+  border-bottom: none;
+}
+
+.faqItem:hover {
+  background-color: #f7f7f7;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.faqQuestion {
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
   color: #0070f3;
-  text-decoration: none;
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
-.resourceCard a:hover {
-  text-decoration: underline;
+.faqQuestion:hover {
+  color: #005bb5;
+  background-color: #e6f0ff;
+}
+
+.faqAnswer {
+  max-height: 0;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+  padding-left: 1rem;
+  border-left: 4px solid #0070f3;
+  transition: max-height 0.5s ease, padding-top 0.5s ease;
+}
+
+.faqAnswer.open {
+  max-height: 200px; /* Adjust based on content */
+  padding-top: 1rem;
+}
+
+.faqIndicator {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #0070f3;
+  transition: transform 0.3s ease;
+}
+
+.faqAnswer.open ~ .faqIndicator {
+  transform: translateY(-50%) rotate(45deg); /* Change the indicator */
 }
 
 @media (max-width: 768px) {
-  .textWithImage {
-    flex-direction: column;
-  }
-  
-  .imageSection {
-    margin-top: 1rem;
-  }
-
-  .resourceGrid {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 2rem;
-    margin-bottom: 3rem; 
-  }
-
-  .faqSection {
-    margin-top: 3rem;
-    background-color: #f9f9f9;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .faqHeading {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    color: #333;
-  }
-  
-  .faqItem {
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 1rem;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .faqItem:hover {
-    background-color: #f1f1f1;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  
   .faqQuestion {
     font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    position: relative;
-    color: #0070f3;
   }
-  
-  .faqQuestion:hover {
-    color: #005bb5;
-  }
-  
+
   .faqAnswer {
-    margin-top: 1rem;
-    font-size: 16px;
-    line-height: 1.6;
-    color: #555;
-    padding-left: 1rem;
-    border-left: 3px solid #0070f3;
-    transition: max-height 0.3s ease;
+    font-size: 14px;
   }
-  
-  .faqAnswer p {
-    margin: 0;
-  }
-  
-  @media (max-width: 768px) {
-    .faqSection {
-      padding: 1rem;
-    }
-  
-    .faqItem {
-      padding-bottom: 0.5rem;
-    }
-  
-    .faqQuestion {
-      font-size: 16px;
-    }
-  
-    .faqAnswer {
-      font-size: 14px;
-    }
-  }
-  
-  
 }

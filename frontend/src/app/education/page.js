@@ -5,6 +5,7 @@ import styles from '../../styles/Education.module.css';
 
 export default function Education() {
   const [activeIndex, setActiveIndex] = useState(null);
+
   const resources = [
     { title: 'Understanding Crop Diseases', link: 'https://geopard.tech/blog/how-to-control-crop-diseases-with-smart-agriculture/#:~:text=Crop%20diseases%20symptoms%20caused%20by,and%20the%20entire%20plant%3B%20and', description: 'A comprehensive guide to common crop diseases and their management.' },
     { title: 'Organic Treatments for Crop Diseases', link: 'https://cropprotectionnetwork.org/', description: 'Explore organic and natural treatment methods for various crop diseases.' },
@@ -57,11 +58,19 @@ export default function Education() {
         <h3 className={styles.faqHeading}>Frequently Asked Questions (FAQs)</h3>
         {faqs.map((faq, index) => (
           <div key={index} className={styles.faqItem}>
-            <div className={styles.faqQuestion} onClick={() => toggleFAQ(index)}>
+            <div 
+              className={styles.faqQuestion} 
+              onClick={() => toggleFAQ(index)}
+            >
+              <span className={styles.faqIndicator}>
+                {activeIndex === index ? '–' : '+'}
+              </span>
               {faq.question}
             </div>
-            <div className={styles.faqAnswer} style={{ display: activeIndex === index ? 'block' : 'none' }}>
-              {faq.answer}
+            <div 
+              className={`${styles.faqAnswer} ${activeIndex === index ? styles.open : ''}`}
+            >
+              <p>{faq.answer}</p>
             </div>
           </div>
         ))}
