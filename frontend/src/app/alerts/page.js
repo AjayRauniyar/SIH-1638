@@ -1,66 +1,11 @@
-// components/Alerts.jsx
-
 "use client";
 
 import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet'; // Import Leaflet library
-import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
+import dynamic from 'next/dynamic';
 import styles from '../../styles/Alerts.module.css'; // Import the consolidated CSS module
 
-const MapComponent = ({ alerts }) => {
-  // Define the custom icon using CDN URL
-  const customIcon = new L.Icon({
-    iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', // CDN URL for the icon
-    iconSize: [25, 41], // Size of the icon
-    iconAnchor: [12, 41], // Anchor point of the icon (relative to its size)
-    popupAnchor: [0, -41] // Anchor point of the popup relative to the icon
-  });
-
-  return (
-    <div className={styles.mapContainer}>
-      <MapContainer center={[20.5937, 78.9629]} zoom={5} className={styles.map}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {alerts.map((alert, index) => (
-          <Marker
-            key={index}
-            position={getCoordinates(alert.region)}
-            icon={customIcon} // Use custom icon
-          >
-            <Popup>
-              <strong>{alert.crop}</strong><br />
-              Disease: {alert.disease}<br />
-              Date: {alert.date}
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-    </div>
-  );
-};
-
-// Function to convert region to coordinates
-const getCoordinates = (region) => {
-  const coordinates = {
-    Punjab: [31.1471, 75.3412],
-    Haryana: [29.0588, 76.0856],
-    Karnataka: [15.3173, 75.7139],
-    "Andhra Pradesh": [15.9129, 79.7400],
-    Maharashtra: [19.6633, 75.3],
-    "West Bengal": [22.9868, 87.8550],
-    "Madhya Pradesh": [23.4734, 77.9450],
-    "Tamil Nadu": [11.1271, 78.6569],
-    "Uttar Pradesh": [26.8467, 80.9462],
-    Gujarat: [22.2587, 71.1924],
-    Odisha: [20.9517, 85.0985],
-    Bihar: [25.0961, 85.3131],
-    "Karnataka": [15.3173, 75.7139] // Added multiple entries for Karnataka
-  };
-  return coordinates[region] || [20.5937, 78.9629]; // Default to central India if region not found
-};
+// Dynamically import MapComponent with no SSR
+const MapComponent = dynamic(() => import('./MapComponent'), { ssr: false });
 
 const Alerts = () => {
   const [cropFilter, setCropFilter] = useState('');
@@ -103,7 +48,7 @@ const Alerts = () => {
           onChange={e => setCropFilter(e.target.value)} 
           className={styles.filter}
         >
-          <option value="">All Crops</option>
+          <option value="" >All Crops</option>
           {uniqueCrops.map(crop => (
             <option key={crop} value={crop}>{crop}</option>
           ))}
