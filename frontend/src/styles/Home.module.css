@@ -1,12 +1,6 @@
-/* Home.module.css */
-
 .container {
   text-align: center;
 }
-
-
-
-/* Home.module.css */
 
 .hero {
   background-image: url('/images/img_bk.png');
@@ -16,7 +10,6 @@
   padding: 50px;
   text-align: center;
 }
-
 
 .hero h1 {
   font-size: 3rem;
@@ -51,7 +44,6 @@
   padding: 20px; 
 }
 
-
 .featureGrid {
   display: flex;
   flex-wrap: wrap;
@@ -70,6 +62,14 @@
 
 .featureItem h3 {
   margin-top: 0;
+}
+
+.featureImage {
+  width: 100%; /* Ensures the image takes up the full width of the container */
+  height: 200px; /* Fixed height for consistency */
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+  border-radius: 8px; /* Optional: to match the border-radius of featureItem */
+  margin: 10px 0;
 }
 
 .newsletter {
