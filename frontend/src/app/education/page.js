@@ -1,5 +1,4 @@
 'use client'; 
-
 import React, { useState } from 'react';
 import styles from '../../styles/Education.module.css';
 
@@ -10,6 +9,13 @@ export default function Education() {
     { title: 'Understanding Crop Diseases', link: 'https://geopard.tech/blog/how-to-control-crop-diseases-with-smart-agriculture/#:~:text=Crop%20diseases%20symptoms%20caused%20by,and%20the%20entire%20plant%3B%20and', description: 'A comprehensive guide to common crop diseases and their management.' },
     { title: 'Organic Treatments for Crop Diseases', link: 'https://cropprotectionnetwork.org/', description: 'Explore organic and natural treatment methods for various crop diseases.' },
     { title: 'Using AI in Agriculture', link: 'https://intellias.com/artificial-intelligence-in-agriculture/', description: 'Learn how AI is revolutionizing the agriculture industry.' }
+  ];
+
+  const videos = [
+    { title: 'Crop Diseases and their control', thumbnail: 'https://img.youtube.com/vi/OtiqxEaNY2o/hqdefault.jpg', link: 'https://www.youtube.com/watch?v=OtiqxEaNY2o' },
+    { title: 'Organic Farming Techniques', thumbnail: 'https://img.youtube.com/vi/oQ1KltEBydE/hqdefault.jpg', link: 'https://www.youtube.com/watch?v=oQ1KltEBydE' },
+    { title: 'Identify Plants disease with help of leaves color', thumbnail: 'https://img.youtube.com/vi/zj9NHDhYWbU/hqdefault.jpg', link: 'https://www.youtube.com/watch?v=zj9NHDhYWbU' },
+    { title: 'Artificial Intelligence (AI) in Agriculture', thumbnail: 'https://img.youtube.com/vi/_tijHjup-gM/hqdefault.jpg', link: 'https://www.youtube.com/watch?v=_tijHjup-gM' },
   ];
 
   const faqs = [
@@ -48,10 +54,41 @@ export default function Education() {
       <div className={styles.resourceGrid}>
         {resources.map((resource, index) => (
           <div key={index} className={styles.resourceCard}>
-            <h3><a href={resource.link} target="_blank" rel="noopener noreferrer">{resource.title}</a></h3>
+            <h3>{resource.title}</h3>
             <p>{resource.description}</p>
+            <a 
+              href={resource.link} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={styles.learnMoreLink}
+            >
+              Learn More
+            </a>
           </div>
         ))}
+      </div>
+
+      {/* New Video Section */}
+      <div className={styles.videoSection}>
+        <div className={styles.videoGrid}>
+          {videos.map((video, index) => (
+            <div key={index} className={styles.videoCard}>
+              <a 
+                href={video.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={styles.videoLink}
+              >
+                <img 
+                  src={video.thumbnail} 
+                  alt={video.title} 
+                  className={styles.videoThumbnail}
+                />
+                <h3 className={styles.videoTitle}>{video.title}</h3>
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className={styles.faqSection}>
