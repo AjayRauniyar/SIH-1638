@@ -46,7 +46,7 @@
 }
 
 .alertCard {
-  background-color: #FFF3E0;
+  background-color: #dceac8;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Slightly enhanced shadow */
@@ -78,6 +78,19 @@
   color: #555; /* Slightly lighter color for readability */
 }
 
+.alertContent {
+  display: flex;
+  align-items: center;
+}
+.alertImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+.alertInfo {
+  flex: 1;
+}
 @media (max-width: 1200px) {
   .alertCard {
     flex: 1 1 45%; /* Adjust width for medium screens */
