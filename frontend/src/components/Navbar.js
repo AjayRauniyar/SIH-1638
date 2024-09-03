@@ -5,7 +5,9 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        <Link href="/">CropNurture</Link> {/* Ensure this text is wrapped in the logo class */}
+        <Link href="/">
+        <img src="/images/logo_new.png" alt="CropNurture Logo" />
+        </Link>
       </div>
       <ul className={styles.navLinks}>
         <li><Link href="/">Home</Link></li>
