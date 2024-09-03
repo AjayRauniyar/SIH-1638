@@ -6,9 +6,11 @@
   background-image: url('/images/img_bk.png');
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   color: white;
-  padding: 50px;
+  padding:    100px 50px 50px; 
   text-align: center;
+  height: calc(100vh - 50px);
 }
 
 .hero h1 {
@@ -57,7 +59,7 @@
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   width: 45%;
-  text-align: left;
+  text-align: center;
 }
 
 .featureItem h3 {
@@ -65,11 +67,13 @@
 }
 
 .featureImage {
-  width: 100%; /* Ensures the image takes up the full width of the container */
-  height: 200px; /* Fixed height for consistency */
+  width: 350px; /* Increased size */
+  height: 300px; /* Increased size */
   object-fit: cover; /* Ensures the image covers the area without distortion */
-  border-radius: 8px; /* Optional: to match the border-radius of featureItem */
-  margin: 10px 0;
+  border-radius: 15px; /* Curved rectangular shape */
+  border: 2px solid #4CAF50; /* Green border */
+  margin: 0 auto 20px; /* Centers the image and adds space below */
+  display: block;
 }
 
 .newsletter {
