@@ -4,13 +4,19 @@
   text-align: center;
 }
 
+/* Home.module.css */
+
+/* Home.module.css */
+
 .hero {
-  background: linear-gradient(to right, #448149, #66BB6A);
+  background-image: url('/images/background-image.png');
+  background-size: cover;
+  background-position: center;
   color: white;
-  padding: 50px 20px;
-  border-radius: 10px;
-  margin-bottom: 40px;
+  padding: 50px;
+  text-align: center;
 }
+
 
 .hero h1 {
   font-size: 3rem;
