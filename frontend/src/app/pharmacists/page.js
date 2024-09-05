@@ -1,12 +1,11 @@
 "use client";
+import React, { useState, useEffect } from 'react';
 import styles from '../../styles/Pharmacists.module.css';
 
-import React, { useState, useEffect } from 'react';
-
 export default function Pharmacists() {
+  const [map, setMap] = useState(null);
   const [location, setLocation] = useState('');
   const [pharmacists, setPharmacists] = useState([]);
-  const [selectedPlace, setSelectedPlace] = useState(null);
 
   useEffect(() => {
     // Dynamically load the Google Maps script
@@ -15,84 +14,89 @@ export default function Pharmacists() {
       script.src = url;
       script.async = true;
       script.defer = true;
+      script.onload = () => initMap(); // Initialize map after script is loaded
       document.head.appendChild(script);
     };
 
     if (!window.google) {
-      loadScript(`https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvOQ5TMxm9IdWuZeipj4OyASsOyiKLTo&libraries=places`);
-    }
-
-    // Initialize Google Places Autocomplete once the script is loaded
-    const handleScriptLoad = () => {
-      const autocomplete = new window.google.maps.places.Autocomplete(document.getElementById('location-input'));
-
-      autocomplete.setFields(['geometry', 'name']);
-      
-      autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace();
-        setSelectedPlace(place);
-      });
-    };
-
-    // Check if the script is already loaded
-    if (window.google && window.google.maps) {
-      handleScriptLoad();
+      loadScript(`https://maps.googleapis.com/maps/api/js?key=&libraries=places`);
     } else {
-      window.addEventListener('load', handleScriptLoad);
+      initMap();
     }
 
-    // Cleanup event listener on component unmount
-    return () => window.removeEventListener('load', handleScriptLoad);
+    const initMap = () => {
+      if (window.google && window.google.maps) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+
+            const mapOptions = {
+              center: userLocation,
+              zoom: 15,
+            };
+
+            const newMap = new window.google.maps.Map(document.getElementById('map'), mapOptions);
+            setMap(newMap);
+
+            // Fetch nearby pharmacists or other locations
+            fetchNearbyPharmacists(userLocation, newMap);
+          },
+          () => alert('Could not get your location')
+        );
+      }
+    };
   }, []);
 
-  const findPharmacists = async () => {
-    if (!selectedPlace || !selectedPlace.geometry) {
-      alert("Please select a valid location.");
-      return;
-    }
-
-    const { lat, lng } = selectedPlace.geometry.location;
-
-    // Fetch nearby pharmacists from your backend API
+  const fetchNearbyPharmacists = async (location, mapInstance) => {
     const response = await fetch('http://localhost:5000/nearby-pharmacies', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lat: lat(), lng: lng() }),
+      body: JSON.stringify(location),
     });
 
     const data = await response.json();
     setPharmacists(data.results);
+
+    // Add markers for each pharmacist on the map
+    data.results.forEach((pharmacist) => {
+      const marker = new window.google.maps.Marker({
+        position: {
+          lat: pharmacist.geometry.location.lat,
+          lng: pharmacist.geometry.location.lng,
+        },
+        map: mapInstance,
+        icon: '/herbal-capsule-pill-leaf-medicine-logo-icon-illustration-template-capsule-pharmacy-medical-logo-template-vector.jpg', // Custom icon for pharmacists
+        title: pharmacist.name,
+      });
+
+      marker.addListener('click', () => {
+        // Show pharmacist details in sidebar when marker is clicked
+        setLocation(pharmacist.name);
+      });
+    });
   };
 
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Find a Pharmacist...</h2>
-      <input
-        id="location-input"
-        type="text"
-        placeholder="Enter your location"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-      />
-      <button onClick={findPharmacists}>Search</button>
-  
-      {pharmacists.length > 0 && (
-        <div className={styles.pharmacistGrid}>
-          {pharmacists.map((pharmacist, index) => (
-            <div key={index} className={styles.pharmacistCard}>
-              <h3>{pharmacist.name}</h3>
-              <p>{pharmacist.vicinity}</p>
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${pharmacist.geometry.location.lat},${pharmacist.geometry.location.lng}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View on Map
-              </a>
-            </div>
-          ))}
-        </div>
-      )}
+      <div id="map" className={styles.mapContainer}></div>
+
+      <div className={styles.sidebar}>
+        <h3>Selected Pharmacist: {location}</h3>
+        {pharmacists.length > 0 && (
+          <div className={styles.pharmacistList}>
+            {pharmacists.map((pharmacist, index) => (
+              <div key={index} className={styles.pharmacistItem}>
+                <h4>{pharmacist.name}</h4>
+                <p>{pharmacist.vicinity}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
-}  
+}
