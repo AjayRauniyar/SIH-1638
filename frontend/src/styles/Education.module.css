@@ -33,16 +33,6 @@
   line-height: 1.6;
 }
 
-.imageSection {
-  flex: 1;
-}
-
-.image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
 .faqSection {
   margin-top: 3rem;
   background-color: #f9f9f9;
@@ -103,13 +93,13 @@
 }
 
 .faqAnswer.open {
-  max-height: 200px; /* Adjust based on content */
+  max-height: 200px; 
   padding-top: 1rem;
 }
 
 .faqIndicator {
   position: absolute;
-  right: 1rem; /* Position indicator on the right side */
+  right: 1rem; 
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
@@ -118,7 +108,7 @@
 }
 
 .faqAnswer.open ~ .faqIndicator {
-  transform: translateY(-50%) rotate(45deg); /* Change the indicator */
+  transform: translateY(-50%) rotate(45deg); 
 }
 
 @media (max-width: 768px) {
@@ -138,6 +128,8 @@
   margin-bottom: 2rem;
 }
 
+/* Existing styles... */
+
 .resourceCard {
   background-color: #f9f9f9;
   padding: 1rem;
@@ -146,6 +138,13 @@
   display: flex;
   flex-direction: column; 
   justify-content: space-between; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+}
+
+.resourceCard:hover {
+  transform: scale(1.05); /* Slightly enlarge the card */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Add a more prominent shadow */
+  background-color: #f1f1f1; /* Slightly change background color */
 }
 
 .resourceCard h3 {
@@ -171,6 +170,9 @@
   color: #005bb5; /* Darker color on hover */
   text-decoration: underline; /* Underline on hover for better visibility */
 }
+
+/* Existing styles for other sections... */
+
 
 .videoSection {
   margin-top: 2rem;

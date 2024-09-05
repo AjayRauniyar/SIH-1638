@@ -6,9 +6,36 @@ export default function Education() {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const resources = [
-    { title: 'Understanding Crop Diseases', link: 'https://geopard.tech/blog/how-to-control-crop-diseases-with-smart-agriculture/#:~:text=Crop%20diseases%20symptoms%20caused%20by,and%20the%20entire%20plant%3B%20and', description: 'A comprehensive guide to common crop diseases and their management.' },
-    { title: 'Organic Treatments for Crop Diseases', link: 'https://cropprotectionnetwork.org/', description: 'Explore organic and natural treatment methods for various crop diseases.' },
-    { title: 'Using AI in Agriculture', link: 'https://intellias.com/artificial-intelligence-in-agriculture/', description: 'Learn how AI is revolutionizing the agriculture industry.' }
+    { 
+      title: 'Understanding Crop Diseases', 
+      link: 'https://geopard.tech/blog/how-to-control-crop-diseases-with-smart-agriculture/#:~:text=Crop%20diseases%20symptoms%20caused%20by,and%20the%20entire%20plant%3B%20and', 
+      description: 'A comprehensive guide to common crop diseases and their management. Includes references for wheat, maize, and soybean diseases.'
+    },
+    { 
+      title: 'Organic Treatments for Crop Diseases', 
+      link: 'https://cropprotectionnetwork.org/', 
+      description: 'Explore organic and natural treatment methods for various crop diseases. Detailed information on managing diseases in vegetables, fruits, and grains.'
+    },
+    { 
+      title: 'Using AI in Agriculture', 
+      link: 'https://intellias.com/artificial-intelligence-in-agriculture/', 
+      description: 'Learn how AI is revolutionizing the agriculture industry. Focuses on AI applications in monitoring and managing diseases in various crops, including rice and potatoes.'
+    },
+    {
+      title: 'Disease Management for Wheat Crops',
+      link: 'https://www.myfields.info/book/9-disease-management-wheat',
+      description: 'An in-depth guide to common diseases in wheat crops and effective management strategies. Includes information on Fusarium head blight and wheat rust.'
+    },
+    {
+      title: 'Soybean Disease Management',
+      link: 'https://cals.cornell.edu/field-crops/soybeans/diseases-soybeans',
+      description: 'Resource on soybean diseases like soybean rust and white mold, including integrated management practices and resistance strategies.'
+    },
+    {
+      title: 'Maize Crop Health',
+      link: 'https://www.dairynz.co.nz/feed/crops/maize/',
+      description: 'Focuses on diseases affecting maize, such as maize leaf blight and northern corn leaf blight, with strategies for prevention and control.'
+    }
   ];
 
   const videos = [
@@ -34,22 +61,6 @@ export default function Education() {
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Crop Diseases with Educational Resources</h2>
-      
-      <div className={styles.infoSection}>
-        <div className={styles.textWithImage}>
-          <div className={styles.textSection}>
-            <h3 className={styles.subheading}>What is crop disease?</h3>
-            <p className={styles.paragraph}>
-              Plants become diseased when they are consistently affected by a particular cause, leading to disruptions in their normal physiological processes. This interference can alter the plant's structure, growth, and overall functioning.<br /><br />
-              Disease symptoms arise due to disturbances in one or more of the plant’s vital biochemical and physiological systems.<br /><br />
-              The frequency and spread of crop diseases change with the seasons, influenced by the presence of pathogens, environmental conditions, and the types of crops and varieties being cultivated. Certain plant varieties are more vulnerable to disease outbreaks than others.
-            </p>
-          </div>
-          <div className={styles.imageSection}>
-            <img src="image.png" alt="Crop Disease" className={styles.image}/>
-          </div>
-        </div>
-      </div>
 
       <div className={styles.resourceGrid}>
         {resources.map((resource, index) => (
