@@ -1,4 +1,6 @@
 {
+ 
+
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
@@ -6,7 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type": "module"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
@@ -16,3 +19,4 @@
     "react-leaflet": "^4.2.1"
   }
 }
+

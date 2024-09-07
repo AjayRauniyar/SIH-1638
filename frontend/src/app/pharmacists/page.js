@@ -8,6 +8,7 @@ export default function Pharmacists() {
   const [pharmacists, setPharmacists] = useState([]);
   const [selectedPharmacy, setSelectedPharmacy] = useState(null);
   const [useGeolocation, setUseGeolocation] = useState(true); // Toggle for geolocation
+  const logoUrl = "/images/IMG_20240906_153012.png"; // Corrected path
 
   useEffect(() => {
     const loadScript = (url) => {
@@ -32,13 +33,16 @@ export default function Pharmacists() {
             },
             () => alert("Could not get your location")
           );
+        } else {
+          // Handle the case where geolocation is not used
+          // e.g., initializeMap with a default location or previous search location
         }
       }
     };
 
     if (!window.google) {
       loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=API_KEY&libraries=places`
+        `https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvOQ5TMxm9IdWuZeipj4OyASsOyiKLTo&libraries=places`
       );
     } else {
       initMap();
@@ -59,14 +63,14 @@ export default function Pharmacists() {
 
   const fetchNearbyPharmacists = (location, mapInstance) => {
     const service = new window.google.maps.places.PlacesService(mapInstance);
-  
+
     const request = {
       location: new window.google.maps.LatLng(location.lat, location.lng),
       radius: "5000", // Broaden the radius to capture more relevant results
       type: ["store"], // Use 'store' type to capture agricultural stores
-      keyword: "agriculture supplies, farm equipment, herbicide, pesticide,agriculture store,farm supplies,fertilizers",
+      keyword: "agriculture supplies, farm equipment, herbicide, pesticide, agriculture store, farm supplies, fertilizers",
     };
-  
+
     service.nearbySearch(request, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         setPharmacists(results);
@@ -75,7 +79,6 @@ export default function Pharmacists() {
       }
     });
   };
-  
 
   // Handle manual location input
   const handleLocationSubmit = async () => {
@@ -97,17 +100,17 @@ export default function Pharmacists() {
       pharmacy.geometry.location.lat(),
       pharmacy.geometry.location.lng()
     );
-  
+
     // Center the map on the selected pharmacy location
     map.setCenter(latLng);
     map.setZoom(16);
-  
+
     // Clear previous markers (optional if you want to show only one marker at a time)
     if (map.markers) {
       map.markers.forEach((marker) => marker.setMap(null));
     }
     map.markers = [];
-  
+
     // Create a custom marker with red color and increased size
     const marker = new window.google.maps.Marker({
       position: latLng,
@@ -121,13 +124,13 @@ export default function Pharmacists() {
         scale: 10, // Scale defines the size of the marker
       },
     });
-  
+
     // Store the marker for future reference
     map.markers.push(marker);
-  
+
     // Set the selected pharmacy to show details in the sidebar
     setSelectedPharmacy(pharmacy);
-  
+
     // Create an InfoWindow for marker details
     const infoWindow = new window.google.maps.InfoWindow({
       content: `
@@ -139,17 +142,12 @@ export default function Pharmacists() {
         </div>
       `,
     });
-  
+
     // Show info window when clicking the marker
     marker.addListener("click", () => {
       infoWindow.open(map, marker);
     });
   };
-  
-  
-  
-  
-  
 
   return (
     <div className={styles.container}>
@@ -199,31 +197,34 @@ export default function Pharmacists() {
                   className={styles.pharmacyItem}
                   onClick={() => handlePharmacyClick(pharmacy)}
                 >
+                  <img
+                    src={logoUrl} // Using the logoUrl variable here
+                    alt="Pharmacy Logo"
+                    width="30" // Adjust the width as needed
+                    height="30" // Adjust the height as needed
+                    style={{ marginRight: "10px" }} // Adds space between the logo and name
+                  />
                   {index + 1}. {pharmacy.name}
                 </li>
               ))}
             </ul>
           )}
 
-{selectedPharmacy && (
-  <div className={styles.pharmacyDetails}>
-    <h3>{selectedPharmacy.name}</h3>
-    <p>Address: {selectedPharmacy.vicinity}</p>
-    {selectedPharmacy.rating && (
-      <p>Rating: {selectedPharmacy.rating}</p>
-    )}
-    {/* Remove the external Google Maps link */}
-    <p>Location is centered on the map on the left.</p>
+          {selectedPharmacy && (
+            <div className={styles.pharmacyDetails}>
+              <h3>{selectedPharmacy.name}</h3>
+              <p>Address: {selectedPharmacy.vicinity}</p>
+              {selectedPharmacy.rating && <p>Rating: {selectedPharmacy.rating}</p>}
+              <p>Location is centered on the map on the left.</p>
 
-    <button
-      onClick={() => setSelectedPharmacy(null)}
-      className={styles.backButton}
-    >
-      Back to List
-    </button>
-  </div>
-)}
-
+              <button
+                onClick={() => setSelectedPharmacy(null)}
+                className={styles.backButton}
+              >
+                Back to List
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
