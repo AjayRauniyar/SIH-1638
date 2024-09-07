@@ -118,7 +118,7 @@ export default function Pharmacists() {
         fillOpacity: 1,
         strokeColor: "white", // White border for contrast
         strokeWeight: 2,
-        scale: 10, // Scale defines the size of the marker (increase for bigger marker)
+        scale: 10, // Scale defines the size of the marker
       },
     });
   
@@ -127,7 +127,25 @@ export default function Pharmacists() {
   
     // Set the selected pharmacy to show details in the sidebar
     setSelectedPharmacy(pharmacy);
+  
+    // Create an InfoWindow for marker details
+    const infoWindow = new window.google.maps.InfoWindow({
+      content: `
+        <div>
+          <h3>${pharmacy.name}</h3>
+          <p><strong>Address:</strong> ${pharmacy.vicinity}</p>
+          ${pharmacy.rating ? `<p><strong>Rating:</strong> ${pharmacy.rating}</p>` : ''}
+          ${pharmacy.photos ? `<img src="${pharmacy.photos[0].getUrl()}" alt="${pharmacy.name}" width="150" height="100"/>` : ''}
+        </div>
+      `,
+    });
+  
+    // Show info window when clicking the marker
+    marker.addListener("click", () => {
+      infoWindow.open(map, marker);
+    });
   };
+  
   
   
   
