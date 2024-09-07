@@ -8,7 +8,7 @@ export default function Pharmacists() {
   const [pharmacists, setPharmacists] = useState([]);
   const [selectedPharmacy, setSelectedPharmacy] = useState(null);
   const [useGeolocation, setUseGeolocation] = useState(true); // Toggle for geolocation
-  const logoUrl = "/images/IMG_20240906_153012.png"; // Corrected path
+  const logoUrl = "/images/IMG_20240906_153012.png"; // Custom logo for pharmacy markers
 
   useEffect(() => {
     const loadScript = (url) => {
@@ -35,7 +35,6 @@ export default function Pharmacists() {
           );
         } else {
           // Handle the case where geolocation is not used
-          // e.g., initializeMap with a default location or previous search location
         }
       }
     };
@@ -55,7 +54,10 @@ export default function Pharmacists() {
       zoom: 13,
     };
 
-    const newMap = new window.google.maps.Map(document.getElementById("map"), mapOptions);
+    const newMap = new window.google.maps.Map(
+      document.getElementById("map"),
+      mapOptions
+    );
     setMap(newMap);
 
     fetchNearbyPharmacists(location, newMap);
@@ -66,21 +68,114 @@ export default function Pharmacists() {
 
     const request = {
       location: new window.google.maps.LatLng(location.lat, location.lng),
-      radius: "5000", // Broaden the radius to capture more relevant results
-      type: ["store"], // Use 'store' type to capture agricultural stores
-      keyword: "agriculture supplies, farm equipment, herbicide, pesticide, agriculture store, farm supplies, fertilizers",
+      radius: "20000",
+      type: ["store"],
+      keyword:
+        "agriculture supplies, farm equipment, herbicide, pesticide, agriculture store, farm supplies, fertilizers",
     };
 
     service.nearbySearch(request, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         setPharmacists(results);
+        placePharmacyMarkers(results, mapInstance);
       } else {
         alert("No relevant pharmacies found");
       }
     });
   };
 
-  // Handle manual location input
+  const placePharmacyMarkers = (pharmacies, mapInstance) => {
+    pharmacies.forEach((pharmacy) => {
+      const latLng = new window.google.maps.LatLng(
+        pharmacy.geometry.location.lat(),
+        pharmacy.geometry.location.lng()
+      );
+
+      const marker = new window.google.maps.Marker({
+        position: latLng,
+        map: mapInstance,
+        icon: {
+          url: logoUrl,
+          scaledSize: new window.google.maps.Size(40, 40),
+        },
+      });
+
+      const infoWindow = new window.google.maps.InfoWindow({
+        content: `
+          <div>
+            <h3>${pharmacy.name}</h3>
+            <p><strong>Address:</strong> ${pharmacy.vicinity}</p>
+            ${
+              pharmacy.rating
+                ? `<p><strong>Rating:</strong> ${pharmacy.rating}</p>`
+                : ""
+            }
+            ${
+              pharmacy.photos
+                ? `<img src="${pharmacy.photos[0].getUrl()}" alt="${pharmacy.name}" width="150" height="100"/>`
+                : ""
+            }
+          </div>
+        `,
+      });
+
+      marker.addListener("click", () => {
+        infoWindow.open(mapInstance, marker);
+        setSelectedPharmacy(pharmacy);
+      });
+    });
+  };
+
+  // Handle when a user clicks on a pharmacy from the list
+  const handlePharmacyClick = (pharmacy) => {
+    const latLng = new window.google.maps.LatLng(
+      pharmacy.geometry.location.lat(),
+      pharmacy.geometry.location.lng()
+    );
+
+    // Center and zoom in the map
+    map.setCenter(latLng);
+    map.setZoom(16); // Zoom level for a closer view
+
+    // Clear existing markers if any
+    if (map.markers) {
+      map.markers.forEach((marker) => marker.setMap(null));
+    }
+    map.markers = [];
+
+    // Add a custom marker to the selected pharmacy
+    const marker = new window.google.maps.Marker({
+      position: latLng,
+      map: map,
+      icon: {
+        url: logoUrl,
+        scaledSize: new window.google.maps.Size(40, 40),
+      },
+    });
+
+    // Set InfoWindow
+    const infoWindow = new window.google.maps.InfoWindow({
+      content: `
+        <div>
+          <h3>${pharmacy.name}</h3>
+          <p><strong>Address:</strong> ${pharmacy.vicinity}</p>
+          ${
+            pharmacy.rating
+              ? `<p><strong>Rating:</strong> ${pharmacy.rating}</p>`
+              : ""
+          }
+          ${
+            pharmacy.photos
+              ? `<img src="${pharmacy.photos[0].getUrl()}" alt="${pharmacy.name}" width="150" height="100"/>`
+              : ""
+          }
+        </div>
+      `,
+    });
+
+    infoWindow.open(map, marker);
+  };
+
   const handleLocationSubmit = async () => {
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ address: location }, (results, status) => {
@@ -93,67 +188,12 @@ export default function Pharmacists() {
     });
   };
 
-  // Function to handle the click on a pharmacy
-  const handlePharmacyClick = (pharmacy) => {
-    // Get the exact latitude and longitude from the selected pharmacy
-    const latLng = new window.google.maps.LatLng(
-      pharmacy.geometry.location.lat(),
-      pharmacy.geometry.location.lng()
-    );
-
-    // Center the map on the selected pharmacy location
-    map.setCenter(latLng);
-    map.setZoom(16);
-
-    // Clear previous markers (optional if you want to show only one marker at a time)
-    if (map.markers) {
-      map.markers.forEach((marker) => marker.setMap(null));
-    }
-    map.markers = [];
-
-    // Create a custom marker with red color and increased size
-    const marker = new window.google.maps.Marker({
-      position: latLng,
-      map: map,
-      icon: {
-        path: window.google.maps.SymbolPath.CIRCLE, // Use a circle symbol to mark the location
-        fillColor: "red", // Red color for the marker
-        fillOpacity: 1,
-        strokeColor: "white", // White border for contrast
-        strokeWeight: 2,
-        scale: 10, // Scale defines the size of the marker
-      },
-    });
-
-    // Store the marker for future reference
-    map.markers.push(marker);
-
-    // Set the selected pharmacy to show details in the sidebar
-    setSelectedPharmacy(pharmacy);
-
-    // Create an InfoWindow for marker details
-    const infoWindow = new window.google.maps.InfoWindow({
-      content: `
-        <div>
-          <h3>${pharmacy.name}</h3>
-          <p><strong>Address:</strong> ${pharmacy.vicinity}</p>
-          ${pharmacy.rating ? `<p><strong>Rating:</strong> ${pharmacy.rating}</p>` : ''}
-          ${pharmacy.photos ? `<img src="${pharmacy.photos[0].getUrl()}" alt="${pharmacy.name}" width="150" height="100"/>` : ''}
-        </div>
-      `,
-    });
-
-    // Show info window when clicking the marker
-    marker.addListener("click", () => {
-      infoWindow.open(map, marker);
-    });
-  };
-
   return (
     <div className={styles.container}>
-      <h2 className={styles.heading}>Find an Agriculture-related Pharmacist...</h2>
+      <h2 className={styles.heading}>
+        Find an Agriculture-related Pharmacist...
+      </h2>
 
-      {/* Toggle for Geolocation or Manual Entry */}
       <div className={styles.locationToggle}>
         <label>
           <input
@@ -195,14 +235,14 @@ export default function Pharmacists() {
                 <li
                   key={index}
                   className={styles.pharmacyItem}
-                  onClick={() => handlePharmacyClick(pharmacy)}
+                  onClick={() => handlePharmacyClick(pharmacy)} // Update this line
                 >
                   <img
-                    src={logoUrl} // Using the logoUrl variable here
+                    src={logoUrl}
                     alt="Pharmacy Logo"
-                    width="30" // Adjust the width as needed
-                    height="30" // Adjust the height as needed
-                    style={{ marginRight: "10px" }} // Adds space between the logo and name
+                    width="30"
+                    height="30"
+                    style={{ marginRight: "10px" }}
                   />
                   {index + 1}. {pharmacy.name}
                 </li>
@@ -214,7 +254,9 @@ export default function Pharmacists() {
             <div className={styles.pharmacyDetails}>
               <h3>{selectedPharmacy.name}</h3>
               <p>Address: {selectedPharmacy.vicinity}</p>
-              {selectedPharmacy.rating && <p>Rating: {selectedPharmacy.rating}</p>}
+              {selectedPharmacy.rating && (
+                <p>Rating: {selectedPharmacy.rating}</p>
+              )}
               <p>Location is centered on the map on the left.</p>
 
               <button
