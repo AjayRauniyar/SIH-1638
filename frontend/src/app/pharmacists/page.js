@@ -42,7 +42,7 @@ export default function Pharmacists() {
 
     if (!window.google) {
       loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvOQ5TMxm9IdWuZeipj4OyASsOyiKLTo&libraries=places`
+        `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places`
       );
     } else {
       initMap();
