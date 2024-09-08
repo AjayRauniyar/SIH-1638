@@ -71,7 +71,7 @@ export default function Pharmacists() {
       radius: "20000",
       type: ["store"],
       keyword:
-        "agriculture supplies, farm equipment, herbicide, pesticide, agriculture store, farm supplies, fertilizers",
+        "agriculture supplies, farm equipment, herbicide, pesticide, agriculture store, farm supplies, fertilizers,medicines,agriculture pharmacy,farm",
     };
 
     service.nearbySearch(request, (results, status) => {
