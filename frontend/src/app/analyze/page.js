@@ -29,7 +29,7 @@ export default function CropAnalysis() {
     formData.append('file', selectedImage);
 
     try {
-      const response = await fetch('http://localhost:8000/disease-predict', {
+      const response = await fetch('https://sih-1638.onrender.com/disease-predict', {
         method: 'POST',
         body: formData,
       });
