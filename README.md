@@ -106,23 +106,31 @@ The app is positioned to address the needs of over 58% of India's population inv
 
 ## 📸 Screenshots
 
-![App Homepage](https://sih-1638.vercel.app/homepage-screenshot.png)  
+
 *CropNurture web interface displaying disease prediction options.*
+![Screenshot 2024-09-09 095821](https://github.com/user-attachments/assets/af0bc6fc-5866-4a8c-b1f6-1158806885b5)
+![Screenshot 2024-09-09 095746](https://github.com/user-attachments/assets/d501bbd7-92bb-4ba7-8d1b-93b308014813)
+
+
 
 ---
 
 ## 📹 Links
 
 - **Prototype:** [CropNurture Prototype](https://sih-1638.vercel.app/)
-- **Presentation:** [Pitch Deck](https://drive.google.com/file/d/1aF_glThG_Ss3AV3q17PCQ-aKZhUXoGhF/view?usp=drive_link)
-- **Demo Video:** [Watch Now](https://drive.google.com/file/d/1IUIm38H3GS4mX5eTNzxsu_D-F-HFMEj9/view?usp=drive_link)
+- **Presentation:** [Pitch Deck](https://drive.google.com/file/d/1IUIm38H3GS4mX5eTNzxsu_D-F-HFMEj9/view?usp=drive_link)
+- **Demo Video:** [Watch Now](https://drive.google.com/file/d/1aF_glThG_Ss3AV3q17PCQ-aKZhUXoGhF/view?usp=drive_link)
 
 ---
 
 ## 🤝 Collaborators
 
 - Ajay Rauniyar (Team Lead)  
-- [List other team members]
+- Shaik Pervez
+- Ankit Kumar Gupta
+- Drishti Gurnani
+- Bhumi Jain
+- Devanshee Sharma
 
 ---
 
