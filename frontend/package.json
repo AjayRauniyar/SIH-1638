@@ -2,21 +2,92 @@
  
 
   "name": "my-app",
+ 
+
   "version": "0.1.0",
+ 
+
   "private": true,
+ 
+
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "type": "module"
+ 
+
+   
+
+  "dev": "next dev",
+ 
+
+   
+
+  "build": "next build",
+ 
+
+   
+
+  "start": "next start",
+ 
+
+   
+
+  "lint": "next lint",
+ 
+
+   
+
+  "type": "module"
+ 
+
   },
+ 
+
   "dependencies": {
-    "leaflet": "^1.9.4",
-    "next": "^14.2.7",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-leaflet": "^4.2.1"
+ 
+
+   
+
+  "axios": "^1.7.7",
+ 
+
+   
+
+  "i18next": "^23.15.1",
+ 
+
+   
+
+  "leaflet": "^1.9.4",
+ 
+
+   
+
+  "next": "^14.2.7",
+ 
+
+   
+
+  "react": "^18",
+ 
+
+   
+
+  "react-dom": "^18",
+ 
+
+   
+
+  "react-i18next": "^15.0.1",
+ 
+
+   
+
+  "react-leaflet": "^4.2.1",
+ 
+
+   
+
+  "react-scripts": "^5.0.1"
+ 
+
   }
 }
-

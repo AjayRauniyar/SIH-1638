@@ -11,13 +11,17 @@ export default function Pharmacists() {
   const logoUrl = "/images/IMG_20240906_153012.png"; // Custom logo for pharmacy markers
 
   useEffect(() => {
-    const loadScript = (url) => {
-      const script = document.createElement("script");
-      script.src = url;
-      script.async = true;
-      script.defer = true;
-      script.onload = () => initMap();
-      document.head.appendChild(script);
+    const loadGoogleMapsScript = () => {
+      if (!window.google) {
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvOQ5TMxm9IdWuZeipj4OyASsOyiKLTo&libraries=places`;
+        script.async = true;
+        script.defer = true;
+        script.onload = () => initMap();
+        document.head.appendChild(script);
+      } else {
+        initMap();
+      }
     };
 
     const initMap = () => {
@@ -33,19 +37,11 @@ export default function Pharmacists() {
             },
             () => alert("Could not get your location")
           );
-        } else {
-          // Handle the case where geolocation is not used
         }
       }
     };
 
-    if (!window.google) {
-      loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places`
-      );
-    } else {
-      initMap();
-    }
+    loadGoogleMapsScript();
   }, [useGeolocation]);
 
   const initializeMap = (location) => {
@@ -126,24 +122,20 @@ export default function Pharmacists() {
     });
   };
 
-  // Handle when a user clicks on a pharmacy from the list
   const handlePharmacyClick = (pharmacy) => {
     const latLng = new window.google.maps.LatLng(
       pharmacy.geometry.location.lat(),
       pharmacy.geometry.location.lng()
     );
 
-    // Center and zoom in the map
     map.setCenter(latLng);
     map.setZoom(16); // Zoom level for a closer view
 
-    // Clear existing markers if any
     if (map.markers) {
       map.markers.forEach((marker) => marker.setMap(null));
     }
     map.markers = [];
 
-    // Add a custom marker to the selected pharmacy
     const marker = new window.google.maps.Marker({
       position: latLng,
       map: map,
@@ -153,7 +145,6 @@ export default function Pharmacists() {
       },
     });
 
-    // Set InfoWindow
     const infoWindow = new window.google.maps.InfoWindow({
       content: `
         <div>
@@ -235,7 +226,7 @@ export default function Pharmacists() {
                 <li
                   key={index}
                   className={styles.pharmacyItem}
-                  onClick={() => handlePharmacyClick(pharmacy)} // Update this line
+                  onClick={() => handlePharmacyClick(pharmacy)}
                 >
                   <img
                     src={logoUrl}
