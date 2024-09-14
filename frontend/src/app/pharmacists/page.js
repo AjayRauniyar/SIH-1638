@@ -14,7 +14,7 @@ export default function Pharmacists() {
     const loadGoogleMapsScript = () => {
       if (!window.google) {
         const script = document.createElement("script");
-        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAIvOQ5TMxm9IdWuZeipj4OyASsOyiKLTo&libraries=places`;
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}&libraries=places`;
         script.async = true;
         script.defer = true;
         script.onload = () => initMap();
