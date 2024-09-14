@@ -13,6 +13,7 @@ from PIL import Image
 from utils.model import ResNet9
 from utils.fertilizer import fertilizer_dic
 from utils.disease import disease_dic
+import os
 
 # -------------------------LOADING THE TRAINED MODELS -----------------------------------------------
 
@@ -215,4 +216,5 @@ def disease_prediction():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8000)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+
